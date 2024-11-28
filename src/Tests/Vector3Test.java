@@ -1,8 +1,7 @@
 package Tests;
 
-import Math.Vector3;
 import Math.Vector;
-
+import Math.Vector3;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,101 +10,118 @@ class Vector3Test {
 
     @Test
     void sum() {
-        Vector v1 = new Vector3(1, 2, 4);
-        Vector v2 = new Vector3(3, 4, 5);
-        Vector expectedResult = new Vector3(4, 6, 9);
+        final float[] m1 = {1, 2, 4};
+        final float[] m2 = {3, 4, 5};
+        Vector v1 = new Vector3(m1);
+        Vector v2 = new Vector3(m2);
+        final float[] mRes = {4, 6, 9};
+        Vector expectedResult = new Vector3(mRes);
 
-        Vector result = v1.sum( v2);
+        Vector result = v1.sum(v2);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
-
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void subtract() {
-        Vector v1 = new Vector3(1, 4, 6);
-        Vector v2 = new Vector3(3, 2, 0);
-        Vector expectedResult = new Vector3(-2, 2, 6);
+        final float[] m1 = {1, 4, 6};
+        final float[] m2 = {3, 2, 0};
+        Vector v1 = new Vector3(m1);
+        Vector v2 = new Vector3(m2);
+        final float[] mRes = {-2, 2, 6};
+        Vector expectedResult = new Vector3(mRes);
 
-        Vector result = v1.subtract( v2);
+        Vector result = v1.subtract(v2);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void multiplyOnScalar() {
-        Vector v1 = new Vector3(1, 2, 8);
-        double scalar = 5;
-        Vector expectedResult = new Vector3(5, 10, 40);
+        final float[] m1 = {1, 2, 8};
+        Vector v1 = new Vector3(m1);
+        final float scalar = 5;
+        final float[] mRes = {5, 10, 40};
+        Vector expectedResult = new Vector3(mRes);
 
-        Vector result = v1.multiplyOnScalar( scalar);
+        Vector result = v1.multiplyOnScalar(scalar);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
 
     }
 
     @Test
     void divisionOnScalar() {
-        Vector v1 = new Vector3(1, 5, 0);
-        double scalar = 5;
-        Vector expectedResult = new Vector3(0.2, 1, 0);
+        final float[] m1 = {1, 5, 0};
+        Vector v1 = new Vector3(m1);
+        final float scalar = 5;
+        final float[] mRes = {0.2F, 1, 0};
+        Vector expectedResult = new Vector3(mRes);
 
-        Vector result = v1.divisionOnScalar( scalar);
+        Vector result = v1.divisionOnScalar(scalar);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
+        for (int i = 0; i < expectedResult.length(); i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void length() {
-        Vector v1 = new Vector3(2, 1, 2);
-        double expectedResult = 3;
+        final float[] m1 = {2, 1, 2};
+        Vector v1 = new Vector3(m1);
+        final float expectedResult = 3;
 
-        double result = v1.length(v1);
+        final float result = v1.length();
 
         assertEquals(expectedResult, result);
     }
 
     @Test
     void normalize() {
-        Vector v1 = new Vector3(2, 1, 2);
-        Vector expectedResult = new Vector3(0.6666666666666666, 0.3333333333333333, 0.6666666666666666);
+        final float[] m1 = {2, 1, 2};
+        Vector v1 = new Vector3(m1);
+        final float[] mRes = {0.666F, 0.333F, 0.666F};
+        Vector expectedResult = new Vector3(mRes);
 
-        Vector result = v1.normalize(v1);
+        Vector result = v1.normalize();
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
+        for (int i = 0; i < expectedResult.length(); i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i), 0.001);
+        }
     }
 
     @Test
     void scalarProduct() {
-        Vector v1 = new Vector3(1, 2,7);
-        Vector v2 = new Vector3(4, 5,6);
-        double expectedResult = 56;
+        final float[] m1 = {1, 2, 7};
+        final float[] m2 = {4, 5, 6};
+        Vector v1 = new Vector3(m1);
+        Vector v2 = new Vector3(m2);
+        final float expectedResult = 56;
 
-        double result = v1.scalarProduct( v2);
+        final float result = v1.scalarProduct(v2);
 
         assertEquals(expectedResult, result);
     }
 
     @Test
     void vectorProduct() {
-        Vector3 v1 = new Vector3(1, 2, 7);
-        Vector v2 = new Vector3(4, 5,6);
-        Vector expectedResult = new Vector3(-23, 22, -3);
+        final float[] m1 = {1, 2, 7};
+        final float[] m2 = {4, 5, 6};
+        Vector3 v1 = new Vector3(m1);
+        Vector3 v2 = new Vector3(m2);
+        final float[] mRes = {-23, 22, -3};
+        Vector expectedResult = new Vector3(mRes);
 
-        Vector result = v1.vectorProduct(v1,v2);
+        Vector3 result = v1.vectorProduct(v2);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 }

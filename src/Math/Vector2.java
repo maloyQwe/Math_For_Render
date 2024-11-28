@@ -1,94 +1,99 @@
 package Math;
 
-public class Vector2 implements Vector {
-    private final double x,y;
+import java.util.Arrays;
 
-    public Vector2(double x, double y) {
-        this.x = x;
-        this.y = y;
+public class Vector2 implements Vector {
+
+    private final float[] data;
+
+    public Vector2(final float[] data) {
+        if (data.length != 2) {
+            throw new IllegalArgumentException("Данный вектор не правильной размерности(ожидается размер 2)");
+        }
+        this.data = data;
     }
 
     @Override
     public String toString() {
         return "Vector2{" +
-                "x=" + x +
-                ", y=" + y +
+                "data=" + Arrays.toString(data) +
                 '}';
     }
 
-    @Override
-    public double getX() {
-        return x;
-    }
 
     @Override
-    public double getY() {
-        return y;
+    public float getData(int i) {
+        return data[i];
     }
 
-    @Override
-    public double getZ() {
-        throw new UnsupportedOperationException("Vector2 не имеет координаты Z");
-    }
 
     @Override
-    public double getW() {
-        throw new UnsupportedOperationException("Vector2 не имеет координаты W");
-    }
+    public Vector2 sum(Vector other) {
+        if (!(other instanceof Vector2)) {
+            throw new IllegalArgumentException("Переданный вектор не подходит по размеру(ожидается размер 2)");
+        }
+        final float newX = getData(0) + other.getData(0);
+        final float newY = getData(1) + other.getData(1);
 
-    @Override
-    public Vector2 sum(Vector other ) {
-        final double newX = getX() + other.getX();
-        final double newY = getY() + other.getY();
-        return new Vector2(newX, newY);
+        final float[] newData = {newX, newY};
+        return new Vector2(newData);
     }
 
 
     @Override
     public Vector2 subtract(Vector other) {
-        final double newX = getX() - other.getX();
-        final double newY = getY() - other.getY();
-        return new Vector2(newX, newY);
+        if (!(other instanceof Vector2)) {
+            throw new IllegalArgumentException("Переданный вектор не подходит по размеру(ожидается размер 2)");
+        }
+        final float newX = getData(0) - other.getData(0);
+        final float newY = getData(1) - other.getData(1);
+
+        final float[] newData = {newX, newY};
+        return new Vector2(newData);
     }
 
     @Override
-    public Vector2 multiplyOnScalar( double scalar) {
-        final double newX = getX() * scalar;
-        final double newY = getY() * scalar;
+    public Vector2 multiplyOnScalar(final float scalar) {
+        final float newX = getData(0) * scalar;
+        final float newY = getData(1) * scalar;
 
-        return new Vector2(newX, newY);
+        final float[] newData = {newX, newY};
+        return new Vector2(newData);
     }
 
     @Override
-    public Vector2 divisionOnScalar( double scalar) {
-        final double newX = getX() / scalar;
-        final double newY = getY() / scalar;
+    public Vector2 divisionOnScalar(final float scalar) {
+        final float newX = getData(0) / scalar;
+        final float newY = getData(1) / scalar;
 
-        return new Vector2(newX, newY);
+        final float[] newData = {newX, newY};
+        return new Vector2(newData);
+    }
+
+
+    @Override
+    public float length() {
+        return (float)  Math.sqrt(Math.pow(getData(0), 2) + Math.pow(getData(1), 2));
     }
 
     @Override
-    public double length(Vector v1) {
-
-        return Math.sqrt(Math.pow(v1.getX(), 2) + Math.pow(v1.getY(), 2));
-    }
-
-    @Override
-    public Vector2 normalize(Vector v1) {
-        double length = length(v1);
+    public Vector2 normalize() {
+        float length = length();
         if (length == 0) {
             throw new IllegalArgumentException("Нельзя нормализовать вектор с нулевой длиной");
         }
-        final double newX = v1.getX() / length;
-        final double newY = v1.getY() / length;
-        return new Vector2(newX, newY);
+        final float newX = getData(0) / length;
+        final float newY = getData(1) / length;
+
+        final float[] newData = {newX, newY};
+        return new Vector2(newData);
     }
 
     @Override
-    public double scalarProduct( Vector other) {
-
-        return getX() * other.getX() + getY() * other.getY();
+    public float scalarProduct(Vector other) {
+        if (!(other instanceof Vector2)) {
+            throw new IllegalArgumentException("Переданный вектор не подходит по размеру(ожидается размер 2)");
+        }
+        return getData(0) * other.getData(0) + getData(1) * other.getData(1);
     }
-
-
 }

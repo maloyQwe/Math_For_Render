@@ -1,100 +1,109 @@
 package Math;
 
+import java.util.Arrays;
+
 public class Vector4 implements Vector {
-    private final double x,y,z,w;
 
+    private final float[] data;
 
-    public Vector4(double x, double y, double z, double w) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
-    }
-
-
-    @Override
-    public double getX() {
-        return x;
-    }
-    @Override
-    public double getY() {
-        return y;
+    public Vector4(float[] data) {
+        if (data.length != 4) {
+            throw new IllegalArgumentException("Данный вектор не правильной размерности(ожидается размер 4)");
+        }
+        this.data = data;
     }
 
     @Override
-    public double getZ() {
-        return z;
+    public String toString() {
+        return "Vector4{" +
+                "data=" + Arrays.toString(data) +
+                '}';
     }
 
     @Override
-    public double getW() {
-       return w;
+    public float getData(int index) {
+        return data[index];
     }
-
 
     @Override
     public Vector4 sum(Vector other) {
-        final double newX = getX() + other.getX();
-        final double newY = getY() + other.getY();
-        final double newZ = getZ() + other.getZ();
-        final double newW = getW() + other.getW();
-        return new Vector4(newX, newY,newZ,newW);
+        if (!(other instanceof Vector4)) {
+            throw new IllegalArgumentException("Переданный вектор не подходит по размеру(ожидается размер 4)");
+        }
+        final float newX = getData(0) + other.getData(0);
+        final float newY = getData(1) + other.getData(1);
+        final float newZ = getData(2) + other.getData(2);
+        final float newW = getData(3) + other.getData(3);
+
+        final float[] newData = {newX, newY, newZ, newW};
+        return new Vector4(newData);
     }
 
 
-
     @Override
-    public Vector4 subtract( Vector other) {
-        final double newX = getX() - other.getX();
-        final double newY = getY() - other.getY();
-        final double newZ = getZ() - other.getZ();
-        final double newW = getW() - other.getW();
-        return new Vector4(newX, newY,newZ,newW);
+    public Vector4 subtract(Vector other) {
+        if (!(other instanceof Vector4)) {
+            throw new IllegalArgumentException("Переданный вектор не подходит по размеру(ожидается размер 4)");
+        }
+        final float newX = getData(0) - other.getData(0);
+        final float newY = getData(1) - other.getData(1);
+        final float newZ = getData(2) - other.getData(2);
+        final float newW = getData(3) - other.getData(3);
+
+        final float[] newData = {newX, newY, newZ, newW};
+        return new Vector4(newData);
     }
 
     @Override
-    public Vector4 multiplyOnScalar( double scalar) {
-        final double newX = getX() * scalar;
-        final double newY = getY() * scalar;
-        final double newZ = getZ() * scalar;
-        final double newW = getW() * scalar;
+    public Vector4 multiplyOnScalar(final float scalar) {
+        final float newX = getData(0) * scalar;
+        final float newY = getData(1) * scalar;
+        final float newZ = getData(2) * scalar;
+        final float newW = getData(3) * scalar;
 
-        return new Vector4(newX, newY,newZ,newW);
+        final float[] newData = {newX, newY, newZ, newW};
+        return new Vector4(newData);
+
     }
 
     @Override
-    public Vector4 divisionOnScalar( double scalar) {
-        final double newX = getX() / scalar;
-        final double newY = getY() / scalar;
-        final double newZ = getZ() / scalar;
-        final double newW = getW() / scalar;
+    public Vector4 divisionOnScalar(final float scalar) {
+        final float newX = getData(0) / scalar;
+        final float newY = getData(1) / scalar;
+        final float newZ = getData(2) / scalar;
+        final float newW = getData(3) / scalar;
 
-        return new Vector4(newX, newY,newZ,newW);
+        final float[] newData = {newX, newY, newZ, newW};
+        return new Vector4(newData);
     }
 
     @Override
-    public double length(Vector v1) {
-
-        return Math.sqrt(Math.pow(v1.getX(), 2) + Math.pow(v1.getY(), 2)+Math.pow(v1.getZ(), 2)+Math.pow(v1.getW(), 2));
+    public float length() {
+        return (float) Math.sqrt(Math.pow(getData(0), 2) + Math.pow(getData(1), 2) + Math.pow(getData(2), 2) + Math.pow(getData(3), 2));
     }
 
     @Override
-    public Vector4 normalize(Vector v1) {
-        double length = length(v1);
+    public Vector4 normalize() {
+        final float length = length();
         if (length == 0) {
             throw new IllegalArgumentException("Нельзя нормализовать вектор с нулевой длиной");
         }
-        final double newX = v1.getX() / length;
-        final double newY = v1.getY() / length;
-        final double newZ = v1.getZ() / length;
-        final double newW = v1.getW() / length;
-        return new Vector4(newX, newY,newZ,newW);
+        final float newX = getData(0) / length;
+        final float newY = getData(1) / length;
+        final float newZ = getData(2) / length;
+        final float newW = getData(3) / length;
+
+        final float[] newData = {newX, newY, newZ, newW};
+        return new Vector4(newData);
     }
 
     @Override
-    public double scalarProduct( Vector other) {
+    public float scalarProduct(Vector other) {
+        if (!(other instanceof Vector4)) {
+            throw new IllegalArgumentException("Переданный вектор не подходит по размеру(ожидается размер 4)");
+        }
 
-        return getX() * other.getX() + getY() * other.getY()+getZ() * other.getZ()+getW() * other.getW();
+        return getData(0) * other.getData(0) + getData(1) * other.getData(1) + getData(2) * other.getData(2) + getData(3) * other.getData(3);
     }
 
 

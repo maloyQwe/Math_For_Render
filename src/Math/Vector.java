@@ -1,28 +1,21 @@
 package Math;
 
 public interface Vector {
+
+    float getData(int index);
+
     Vector sum(Vector other);
 
     Vector subtract(Vector other);
 
-    Vector multiplyOnScalar( double scalar);
+    Vector multiplyOnScalar(final float scalar);
 
-    Vector divisionOnScalar( double scalar);
+    Vector divisionOnScalar(final float scalar);
 
-    double length(Vector v1);
+    float length();
 
-    Vector normalize(Vector v1);
+    Vector normalize();
 
     //скалярное произведение
-    double scalarProduct( Vector other);
-
-    double getX();
-
-    double getY();
-
-    double getZ();
-
-    double getW();
-
-
+    float scalarProduct(Vector other);
 }

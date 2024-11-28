@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class Matrix3X3 implements Matrix {
 
-    private double[][] matrix;
+    private final float[][] matrix;
 
-    public Matrix3X3(double[][] matrix) {
+    public Matrix3X3(final float [][] matrix) {
         if (matrix.length != 3 || matrix[0].length != 3) {
             throw new IllegalArgumentException("Данная матрица не 3x3");
         }
@@ -28,14 +28,13 @@ public class Matrix3X3 implements Matrix {
 
 
     @Override
-    public double[][] getMatrix() {
+    public float[][] getMatrix() {
         return matrix;
     }
 
-
     @Override
     public Matrix sum(Matrix other) {
-        double[][] nevM = new double[3][3];
+        final float [][] nevM = new float [3][3];
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -47,7 +46,7 @@ public class Matrix3X3 implements Matrix {
 
     @Override
     public Matrix subtract(Matrix other) {
-        double[][] nevM = new double[3][3];
+        final float [][] nevM = new float [3][3];
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -66,17 +65,17 @@ public class Matrix3X3 implements Matrix {
             throw new IllegalArgumentException("Переданный вектор не подходит по размеру");
         }
 
+        final float newX = this.matrix[0][0] * vector.getData(0) + this.matrix[0][1] * vector.getData(1) + this.matrix[0][2] * vector.getData(2);
+        final float newY = this.matrix[1][0] * vector.getData(0) + this.matrix[1][1] * vector.getData(1) + this.matrix[1][2] * vector.getData(2);
+        final float newZ = this.matrix[2][0] * vector.getData(0) + this.matrix[2][1] * vector.getData(1) + this.matrix[2][2] * vector.getData(2);
 
-        double newX = this.matrix[0][0] * vector.getX() + this.matrix[0][1] * vector.getY() + this.matrix[0][2] * vector.getZ();
-        double newY = this.matrix[1][0] * vector.getX() + this.matrix[1][1] * vector.getY() + this.matrix[1][2] * vector.getZ();
-        double newZ = this.matrix[2][0] * vector.getX() + this.matrix[2][1] * vector.getY() + this.matrix[2][2] * vector.getZ();
-
-        return new Vector3(newX, newY, newZ);
+        final float[] newData = {newX, newY, newZ};
+        return new Vector3(newData);
     }
 
     @Override
     public Matrix multiplyOnMatrix(Matrix other) {
-        double[][] nevM = new double[3][3];
+        final float [][] nevM = new float [3][3];
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -90,7 +89,8 @@ public class Matrix3X3 implements Matrix {
 
     @Override
     public Matrix transpose() {
-        double[][] nevM = new double[3][3];
+        final float [][] nevM = new float [3][3];
+
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 nevM[i][j] = matrix[j][i];

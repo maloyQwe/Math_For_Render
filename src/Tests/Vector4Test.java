@@ -2,7 +2,6 @@ package Tests;
 
 import Math.Vector;
 import Math.Vector4;
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,93 +10,101 @@ class Vector4Test {
 
     @Test
     void sum() {
-        Vector v1 = new Vector4(1, 2, 4, 0);
-        Vector v2 = new Vector4(3, 4, 5, 7);
-        Vector expectedResult = new Vector4(4, 6, 9, 7);
+        final float[] m1 = {1, 2, 4, 0};
+        final float[] m2 = {3, 4, 5, 7};
+        Vector v1 = new Vector4(m1);
+        Vector v2 = new Vector4(m2);
+        final float[] mRes = {4, 6, 9, 7};
+        Vector expectedResult = new Vector4(mRes);
 
         Vector result = v1.sum(v2);
-
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
-        assertEquals(expectedResult.getW(), result.getW());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void subtract() {
-        Vector v1 = new Vector4(1, 4, 6, 0);
-        Vector v2 = new Vector4(3, 2, 0, 7);
-        Vector expectedResult = new Vector4(-2, 2, 6, -7);
+        final float[] m1 = {1, 4, 6, 0};
+        final float[] m2 = {3, 2, 0, 7};
+        Vector v1 = new Vector4(m1);
+        Vector v2 = new Vector4(m2);
+        final float[] mRes = {-2, 2, 6, -7};
+        Vector expectedResult = new Vector4(mRes);
 
         Vector result = v1.subtract(v2);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
-        assertEquals(expectedResult.getW(), result.getW());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void multiplyOnScalar() {
-        Vector v1 = new Vector4(1, 2, 8, 0);
-        double scalar = 5;
-        Vector expectedResult = new Vector4(5, 10, 40, 0);
+        final float[] m1 = {1, -2, 8, 0};
+        Vector v1 = new Vector4(m1);
+        final float scalar = 5;
+        final float[] mRes = {5, -10, 40, 0};
+        Vector expectedResult = new Vector4(mRes);
 
         Vector result = v1.multiplyOnScalar(scalar);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
-        assertEquals(expectedResult.getW(), result.getW());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void divisionOnScalar() {
-        Vector v1 = new Vector4(1, 5, 0, 10);
-        double scalar = 5;
-        Vector expectedResult = new Vector4(0.2, 1, 0, 2);
+        final float[] m1 = {1, 5, 0, 10};
+        Vector v1 = new Vector4(m1);
+        final float scalar = 5;
+        final float[] mRes = {0.2F, 1, 0, 2};
+        Vector expectedResult = new Vector4(mRes);
 
         Vector result = v1.divisionOnScalar(scalar);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
-        assertEquals(expectedResult.getW(), result.getW());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void length() {
-        Vector v1 = new Vector4(1, 4, 2, 2);
-        double expectedResult = 5;
+        final float[] m1 = {1, 4, 2, 2};
+        Vector v1 = new Vector4(m1);
+        final float expectedResult = 5;
 
-        double result = v1.length(v1);
+        final float result = v1.length();
 
         assertEquals(expectedResult, result);
     }
 
     @Test
     void normalize() {
-        Vector v1 = new Vector4(1, 4, 2, 2);
-        Vector expectedResult = new Vector4(0.2, 0.8, 0.4, 0.4);
+        final float[] m1 = {1, 4, 2, 2};
+        Vector v1 = new Vector4(m1);
+        final float[] mRes = {0.2F, 0.8F, 0.4F, 0.4F};
+        Vector expectedResult = new Vector4(mRes);
 
-        Vector result = v1.normalize(v1);
+        Vector result = v1.normalize();
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
-        assertEquals(expectedResult.getW(), result.getW());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void scalarProduct() {
-        Vector v1 = new Vector4(1, 2, 7, 4);
-        Vector v2 = new Vector4(4, 5, 6, 0);
-        double expectedResult = 56;
+        final float[] m1 = {1, 2, 7, 4};
+        final float[] m2 = {4, 5, 6, 0};
+        Vector v1 = new Vector4(m1);
+        Vector v2 = new Vector4(m2);
+        final float expectedResult = 56;
 
-        double result = v1.scalarProduct(v2);
+        final float result = v1.scalarProduct(v2);
 
         assertEquals(expectedResult, result);
     }
-
 
 }

@@ -4,8 +4,6 @@ import Math.Matrix;
 import Math.Matrix4X4;
 import Math.Vector;
 import Math.Vector4;
-
-yrtkjyt
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +15,7 @@ class Matrix4X4Test {
 
     @BeforeEach
     void setUp() {
-        double[][] matrix = {
+        final float[][] matrix = {
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
                 {9, 10, 11, 12},
@@ -31,14 +29,14 @@ class Matrix4X4Test {
 
     @Test
     void sumWithPositiveNum() {
-        double[][] matrixSum = {
+        final float[][] matrixSum = {
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
                 {9, 10, 11, 12},
                 {13, 14, 15, 16}
         };
         Matrix4X4 mSum = new Matrix4X4(matrixSum);
-        double[][] expectedResult = {
+        final float[][] expectedResult = {
                 {2, 4, 6, 8},
                 {10, 12, 14, 16},
                 {18, 20, 22, 24},
@@ -51,25 +49,25 @@ class Matrix4X4Test {
 
         for (int i = 0; i < expectedResult.length; i++) {
             for (int j = 0; j < expectedResult.length; j++) {
-               assertEquals(expectedRes.getMatrix()[i][j], result.getMatrix()[i][j]);
+                assertEquals(expectedRes.getMatrix()[i][j], result.getMatrix()[i][j]);
             }
         }
     }
 
     @Test
     void sumWithNegativeNum() {
-        double[][] matrixSum = {
+        final float[][] matrixSum = {
                 {-1, -2, -3, -4},
-                {-10, -16, -1, -14.5},
-                {-1, -23, -((double) 1 /2), -10},
-                {-130, -52, -0, -44.5}
+                {-10, -16, -1, -14.5F},
+                {-1, -23, -((float) 1 / 2), -10},
+                {-130, -52, -0, -44.5F}
         };
         Matrix4X4 mSum = new Matrix4X4(matrixSum);
-        double[][] expectedResult = {
+        final float[][] expectedResult = {
                 {0, 0, 0, 0},
-                {-5, -10, 6, -6.5},
-                {8, -13, 10.5, 2},
-                {-117, -38, 15, -28.5}
+                {-5, -10, 6, -6.5F},
+                {8, -13, 10.5F, 2},
+                {-117, -38, 15, -28.5F}
         };
         Matrix4X4 expectedRes = new Matrix4X4(expectedResult);
 
@@ -85,18 +83,18 @@ class Matrix4X4Test {
 
     @Test
     void subtractWithPositiveNum() {
-        double[][] matrixSub = {
+        final float[][] matrixSub = {
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
                 {5, 10, 11, 15},
-                {13, 14.5, 17, 16}
+                {13, 14.5F, 17, 16}
         };
         Matrix4X4 mSub = new Matrix4X4(matrixSub);
-        double[][] expectedResult = {
+        final float[][] expectedResult = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {4, 0, 0, -3},
-                {0, -0.5, -2, 0}
+                {0, -0.5F, -2, 0}
         };
         Matrix4X4 expectedRes = new Matrix4X4(expectedResult);
 
@@ -105,7 +103,7 @@ class Matrix4X4Test {
 
         for (int i = 0; i < expectedResult.length; i++) {
             for (int j = 0; j < expectedResult.length; j++) {
-               assertEquals(expectedRes.getMatrix()[i][j], result.getMatrix()[i][j]);
+                assertEquals(expectedRes.getMatrix()[i][j], result.getMatrix()[i][j]);
             }
         }
 
@@ -113,35 +111,37 @@ class Matrix4X4Test {
 
     @Test
     void multiplyOnVector() {
-        Vector scalar = new Vector4(0.3, -0.5, 14, -3);
-        Vector expectedResult = new Vector4(29.299999999999997, 72.5, 115.69999999999999, 158.9);
+        final float[] s = {0.3F, -0.5F, 14, -3};
+        final float[] mRes = {29.299F, 72.5F, 115.699F, 158.9F};
+        Vector scalar = new Vector4(s);
+        Vector expectedResult = new Vector4(mRes);
 
         Vector result = defM.multiplyOnVector(scalar);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
-        assertEquals(expectedResult.getW(), result.getW());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i), 0.001);
+        }
     }
 
     @Test
     void multiplyOnNullVector() {
-        Vector scalar = new Vector4(0, 0, 0, 0);
-        Vector expectedResult = new Vector4(0, 0, 0, 0);
+        final float[] s = {0, 0, 0, 0};
+        Vector scalar = new Vector4(s);
+        final float[] mRes = {0, 0, 0, 0};
+        Vector expectedResult = new Vector4(mRes);
 
         Vector result = defM.multiplyOnVector(scalar);
 
-        assertEquals(expectedResult.getX(), result.getX());
-        assertEquals(expectedResult.getY(), result.getY());
-        assertEquals(expectedResult.getZ(), result.getZ());
-        assertEquals(expectedResult.getW(), result.getW());
+        for (int i = 0; i < mRes.length; i++) {
+            assertEquals(expectedResult.getData(i), result.getData(i));
+        }
     }
 
     @Test
     void multiplyOnMatrixWithPositiveMum() {
 
-        double[][] matrix2 = {
-                {1, 1, 1, 0.5},
+        final float[][] matrix2 = {
+                {1, 1, 1, 0.5F},
                 {2, 2, 2, 2},
                 {3, 3, 3, 3},
                 {4, 2, 4, 4}
@@ -149,11 +149,11 @@ class Matrix4X4Test {
 
         Matrix4X4 m2 = new Matrix4X4(matrix2);
 
-        double[][] expectedResult = {
-                {30, 22, 30, 29.5},
-                {70, 54, 70, 67.5},
-                {110, 86, 110, 105.5},
-                {150, 118, 150, 143.5}
+        final float[][] expectedResult = {
+                {30, 22, 30, 29.5F},
+                {70, 54, 70, 67.5F},
+                {110, 86, 110, 105.5F},
+                {150, 118, 150, 143.5F}
         };
         Matrix4X4 expectedRes = new Matrix4X4(expectedResult);
 
@@ -171,20 +171,20 @@ class Matrix4X4Test {
     @Test
     void multiplyOnMatrixWithNegativeMum() {
 
-        double[][] matrix2 = {
-                {-1, -10, 0, -0.5},
+        final float[][] matrix2 = {
+                {-1, -10, 0, -0.5F},
                 {-2, -2, -2, -2},
-                {-300, -15, -155.0, -3},
-                {-44, -0.3, -6, -4}
+                {-300, -15, -155.0F, -3},
+                {-44, -0.3F, -6, -4}
         };
 
         Matrix4X4 m2 = new Matrix4X4(matrix2);
 
-        double[][] expectedResult = {
-                {-1081, -60.2, -493, -29.5},
-                {-2469, -169.4, -1145, -67.5},
-                {-3857, -278.6, -1797, -105.5},
-                {-5245, -387.8, -2449, -143.5}
+        final float[][] expectedResult = {
+                {-1081, -60.2F, -493, -29.5F},
+                {-2469, -169.4F, -1145, -67.5F},
+                {-3857, -278.6F, -1797, -105.5F},
+                {-5245, -387.8F, -2449, -143.5F}
         };
         Matrix4X4 expectedRes = new Matrix4X4(expectedResult);
 
@@ -203,7 +203,7 @@ class Matrix4X4Test {
     @Test
     void transpose() {
 
-        double[][] expectedResult = {
+        final float[][] expectedResult = {
                 {1, 5, 9, 13},
                 {2, 6, 10, 14},
                 {3, 7, 11, 15},
@@ -224,7 +224,7 @@ class Matrix4X4Test {
 
     @Test
     void single() {
-        double[][] expectedResult = {
+        final float[][] expectedResult = {
                 {1, 0, 0, 0},
                 {0, 1, 0, 0},
                 {0, 0, 1, 0},
@@ -243,7 +243,7 @@ class Matrix4X4Test {
 
     @Test
     void zero() {
-        double[][] expectedResult = {
+        final float[][] expectedResult = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
